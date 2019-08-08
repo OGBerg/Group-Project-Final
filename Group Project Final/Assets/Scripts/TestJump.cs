@@ -29,10 +29,13 @@ public class TestJump : MonoBehaviour
 	float speedupStartTime;
 	public float speedupMaxDuration;
 
+	GameObject rotator;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rotator = GameObject.Find("rotator");
         movement = Vector2.zero;
     }
 
@@ -118,6 +121,11 @@ public class TestJump : MonoBehaviour
     void OnCollisionEnter2D(Collision2D c)
     {
     	if(c.gameObject.tag == "ground") onGround = true;
+    	Debug.Log(c.contacts[0].normal);
+    	if(c.contacts[0].normal.x == -1)
+    	{
+    		rotator.transform.eulerAngles = new Vector3(0,0,Mathf.Floor(rotator.transform.eulerAngles.z-90));
+    	}
     }
 
     void OnCollisionExit2D(Collision2D c)
