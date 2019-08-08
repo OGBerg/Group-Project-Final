@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 214614880}
   m_Layer: 0
   m_Name: left
-  m_TagString: ground
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -336,7 +336,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &217440739
 BoxCollider2D:
@@ -376,9 +376,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032af12e04b1b4f3d9c116eca40d9769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  airSpeed: 50
-  launchSpeed: 50
+  speed: 500
+  airSpeed: 1
+  launchSpeed: 100
   slowdownCurve:
     serializedVersion: 2
     m_Curve:
@@ -403,7 +403,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  slowdownMagnitude: 10
+  slowdownMagnitude: 1
   speedupCurve:
     serializedVersion: 2
     m_Curve:
@@ -428,7 +428,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  speedupMagnitude: 10
+  speedupMagnitude: 1
   slowdownMaxDuration: 3
   speedupMaxDuration: 3
 --- !u!1 &358116387
@@ -444,7 +444,7 @@ GameObject:
   - component: {fileID: 358116388}
   m_Layer: 0
   m_Name: right
-  m_TagString: ground
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

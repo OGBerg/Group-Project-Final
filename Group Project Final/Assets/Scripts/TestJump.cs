@@ -41,9 +41,10 @@ public class TestJump : MonoBehaviour
     {
         if(onGround)
         {
-        	if(Input.GetKey(KeyCode.LeftArrow)) launchDirection = Vector2.left;
-        	if(Input.GetKey(KeyCode.RightArrow)) launchDirection = Vector2.right;
-        	movement += launchDirection;
+        	launchDirection = Vector2.zero;
+        	if(Input.GetKey(KeyCode.LeftArrow)) launchDirection += Vector2.left;
+        	if(Input.GetKey(KeyCode.RightArrow)) launchDirection += Vector2.right;
+        	movement = launchDirection;
         	if(Input.GetKey(KeyCode.Space))
         	{
         		isLaunching = true;
@@ -85,6 +86,7 @@ public class TestJump : MonoBehaviour
     			//play anim here
     			impact = false;
     		}
+     		// Debug.Log("move v: " + (movement * speed * Time.fixedDeltaTime));
     		rb.AddForce(movement * speed * Time.fixedDeltaTime);
     	}
     	else
@@ -95,6 +97,7 @@ public class TestJump : MonoBehaviour
     			Vector2 velocity = rb.velocity;
     			velocity.y = 0;
     			rb.velocity = velocity;
+    			rb.gravityScale = 0;
     		}
     		impact = true;
     		if(slowdown)
