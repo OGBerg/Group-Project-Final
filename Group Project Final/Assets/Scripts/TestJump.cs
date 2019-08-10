@@ -122,10 +122,8 @@ public class TestJump : MonoBehaviour
     {
     	if(c.gameObject.tag == "ground") onGround = true;
     	Debug.Log(c.contacts[0].normal);
-    	if(c.contacts[0].normal.x == -1)
-    	{
-    		rotator.transform.eulerAngles = new Vector3(0,0,Mathf.Floor(rotator.transform.eulerAngles.z-90));
-    	}
+    	rotator.transform.eulerAngles =
+    		new Vector3(0,0,Mathf.Floor(rotator.transform.eulerAngles.z + c.contacts[0].normal.x * 90));
     }
 
     void OnCollisionExit2D(Collision2D c)

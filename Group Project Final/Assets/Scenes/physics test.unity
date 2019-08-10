@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 217440738}
   - component: {fileID: 217440739}
   - component: {fileID: 217440737}
-  - component: {fileID: 217440740}
+  - component: {fileID: 217440741}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -344,7 +344,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 217440734}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3977249f8e7fd479cbe19e3cdae30d49, type: 3}
   m_Name: 
@@ -400,21 +400,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32000023}
   m_EdgeRadius: 0
---- !u!114 &217440740
+--- !u!114 &217440741
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 217440734}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 032af12e04b1b4f3d9c116eca40d9769, type: 3}
+  m_Script: {fileID: 11500000, guid: 84a553de9a7a043edbd6ebaf9c3cb4a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 500
-  airSpeed: 1
-  launchSpeed: 100
+  groundSpeed: 0
+  airSpeed: 0
+  launchHeight: 0
   slowdownCurve:
     serializedVersion: 2
     m_Curve:
@@ -439,7 +439,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  slowdownMagnitude: 1
   speedupCurve:
     serializedVersion: 2
     m_Curve:
@@ -464,9 +463,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  speedupMagnitude: 1
-  slowdownMaxDuration: 3
-  speedupMaxDuration: 3
+  slowdownPercentage: 0
+  speedupPercentage: 0
 --- !u!1 &358116387
 GameObject:
   m_ObjectHideFlags: 0
