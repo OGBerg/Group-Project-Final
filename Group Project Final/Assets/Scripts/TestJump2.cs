@@ -24,7 +24,7 @@ public class TestJump2 : MonoBehaviour
 	bool slowdownActive = false;
 	float slowdownProgress = 1f; //actual percentage of slowdown deceleration completed; 1=full speed, 0=full slow
 	float riseProgress = 1f; //only for running starts, not straight launches
-	float slowdownTimer = slowdownTime;
+	float slowdownTimer;
 
 	Rigidbody2D rb;
 	bool onSurface;
@@ -34,6 +34,7 @@ public class TestJump2 : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         movement = Vector2.zero;
+        slowdownTimer = slowdownTime;
     }
 
     // Update is called once per frame
@@ -50,7 +51,7 @@ public class TestJump2 : MonoBehaviour
         		//these conditions basically invent a hypothetical launch platform of orthogonal orientation; yes, it's hacky
         		if(orientation == Orientation.HORIZ)
         		{
-        			if(!(Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(Input.RightArrow)))
+        			if(!(Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow)))
         			{
         				if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
         					orientation = Orientation.VERT;
@@ -102,8 +103,8 @@ public class TestJump2 : MonoBehaviour
     		slowdownTimer = slowdownTime;
     		if(riseProgress < 1f)
     		{
-    			rise = riseSpeed * launchDirection;
-    			riseProgress += 0.1;
+    			rise = riseSpeed * (int)launchDirection;
+    			riseProgress += 0.1f;
     		}
     		if(orientation == Orientation.HORIZ)
     			rb.velocity = new Vector2(rise, (int)launchDirection * airSpeed);
@@ -111,8 +112,9 @@ public class TestJump2 : MonoBehaviour
     			rb.velocity = new Vector2((int)launchDirection * airSpeed, rise);
     		if(slowdownActive && slowdownTimer > 0)
     		{
-    			//slowdown stuff here
-    			slowdownTimer -= 0.1;
+    			Debug.Log("not implemented yet");
+    			//TODO
+    			slowdownTimer -= 0.1f;
     		}
     	}
     }
