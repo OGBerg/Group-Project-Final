@@ -6,9 +6,9 @@ public class TestJump2 : MonoBehaviour
 {
 	Vector2 movement;
 	enum Orientation {VERT, HORIZ};
-	enum LaunchDirection {UP=1, DOWN=-1, LEFT=1, RIGHT=-1};
-	Orientation orientation = Orientation.HORIZ;
-	LaunchDirection launchDirection = LaunchDirection.UP;
+	enum LaunchDirection {UP=1, DOWN=-1, LEFT=-2, RIGHT=2};
+	Orientation orientation;
+	LaunchDirection launchDirection;
 
 	public float groundSpeed;
 	public float airSpeed;
@@ -24,6 +24,7 @@ public class TestJump2 : MonoBehaviour
 
 	bool slowdownActive = false;
 	float slowdownProgress = 1f; //actual percentage of slowdown deceleration completed; 1=full speed, 0=full slow
+	bool applyRise = false;
 	float riseProgress = 1f; //only for running starts, not straight launches
 	float slowdownTimer;
 
@@ -36,18 +37,25 @@ public class TestJump2 : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         movement = Vector2.zero;
         slowdownTimer = slowdownTime;
+        orientation = Orientation.HORIZ;
+        launchDirection = LaunchDirection.UP;
     }
 
     // Update is called once per frame
     void Update()
     {
+    	if(Input.GetKeyDown(KeyCode.Z))
+    	{
+    		Debug.Log(orientation);
+    		Debug.Log(launchDirection);
+    	}
         if(onSurface)
         {
         	//if VERT, LaunchDirection can only be LEFT or RIGHT
         	//if HORIZ, LaunchDirection can only be UP or DOWN
+        	applyRise = false;
         	if(Input.GetKey(KeyCode.Space))
         	{
-        		onSurface = false;
         		riseProgress = 0;
         		//these conditions basically invent a hypothetical launch platform of orthogonal orientation; yes, it's hacky
         		if(orientation == Orientation.HORIZ)
@@ -55,7 +63,10 @@ public class TestJump2 : MonoBehaviour
         			if(!(Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow)))
         			{
         				if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+        				{
+        					applyRise = true;
         					orientation = Orientation.VERT;
+        				}
         			}
         		}
         		else
@@ -63,9 +74,13 @@ public class TestJump2 : MonoBehaviour
         			if(!(Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.DownArrow)))
         			{
         				if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
+        				{
+        					applyRise = true;
         					orientation = Orientation.HORIZ;
+        				}
         			}
         		}
+        		onSurface = false;
         	}
         	else
         	{
@@ -90,7 +105,7 @@ public class TestJump2 : MonoBehaviour
         		}
         	}
         }
-        else
+        else //in air
         {
         	if(Input.GetKeyDown(KeyCode.Space)) slowdownActive = true;
         	if(Input.GetKeyUp(KeyCode.Space)) slowdownActive = false;
@@ -104,15 +119,15 @@ public class TestJump2 : MonoBehaviour
     	{
     		float rise = 0;
     		slowdownTimer = slowdownTime;
-    		if(riseProgress < 1f)
+    		if(riseProgress < 1f && applyRise)
     		{
-    			rise = riseSpeed * (int)launchDirection;
+    			rise = riseSpeed * Mathf.Clamp((int)launchDirection, -1, 1);
     			riseProgress += 0.1f;
     		}
     		if(orientation == Orientation.HORIZ)
-    			rb.velocity = new Vector2(rise, (int)launchDirection * airSpeed);
+    			rb.velocity = new Vector2(rise, Mathf.Clamp((int)launchDirection, -1, 1) * airSpeed);
     		else
-    			rb.velocity = new Vector2((int)launchDirection * airSpeed, rise);
+    			rb.velocity = new Vector2(Mathf.Clamp((int)launchDirection, -1, 1) * airSpeed, rise);
     		if(slowdownActive && slowdownTimer > 0)
     		{
     			Debug.Log("not implemented yet");
@@ -127,15 +142,15 @@ public class TestJump2 : MonoBehaviour
     	if(c.gameObject.tag == "ground")
     	{
     		onSurface = true;
-    		riseProgress = 1;
+    		riseProgress = 1f;
     		slowdownTimer = slowdownTime;
-    		if(c.contacts[0].normal.x == 0)
+    		if((int)c.contacts[0].normal.x == 0)
     		{
     			orientation = Orientation.HORIZ;
     			if(c.contacts[0].normal.y > 0) launchDirection = LaunchDirection.UP;
     			else launchDirection = LaunchDirection.DOWN;
     		}
-    		else if(c.contacts[0].normal.y == 0)
+    		else if((int)c.contacts[0].normal.y == 0)
     		{
     			orientation = Orientation.VERT;
     			if(c.contacts[0].normal.x < 0) launchDirection = LaunchDirection.LEFT;

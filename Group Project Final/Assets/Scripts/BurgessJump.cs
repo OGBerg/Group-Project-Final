@@ -95,6 +95,7 @@ public class BurgessJump : MonoBehaviour {
 
 	void OnCollisionEnter2D (Collision2D c) {
 		if (c.gameObject.tag == "ground") {
+			//Debug.Log(c.contacts[0].normal);
 			onGround = true;
 			currentJumpHoldFrames = jumpHoldFrames;
 		}
