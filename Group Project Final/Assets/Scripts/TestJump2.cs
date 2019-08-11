@@ -5,6 +5,7 @@ using UnityEngine;
 public class TestJump2 : MonoBehaviour
 {
 	Vector2 movement;
+	Vector2 snapshot;
 	enum Orientation {VERT, HORIZ};
 	enum LaunchDirection {UP=1, DOWN=-1, LEFT=-2, RIGHT=2};
 	Orientation orientation;
@@ -39,6 +40,7 @@ public class TestJump2 : MonoBehaviour
         slowdownTimer = slowdownTime;
         orientation = Orientation.HORIZ;
         launchDirection = LaunchDirection.UP;
+        snapshot = new Vector2(0,0);
     }
 
     // Update is called once per frame
@@ -46,8 +48,8 @@ public class TestJump2 : MonoBehaviour
     {
     	if(Input.GetKeyDown(KeyCode.Z))
     	{
-    		Debug.Log(orientation);
-    		Debug.Log(launchDirection);
+    		Debug.Log(slowdownActive);
+    		Debug.Log(slowdownTimer);
     	}
         if(onSurface)
         {
@@ -60,23 +62,29 @@ public class TestJump2 : MonoBehaviour
         		//these conditions basically invent a hypothetical launch platform of orthogonal orientation; yes, it's hacky
         		if(orientation == Orientation.HORIZ)
         		{
+        			snapshot = new Vector2(0, Mathf.Clamp((int)launchDirection, -1, 1));
         			if(!(Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow)))
         			{
         				if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
         				{
         					applyRise = true;
         					orientation = Orientation.VERT;
+        					if(Input.GetKey(KeyCode.LeftArrow)) snapshot.x = -1;
+        					if(Input.GetKey(KeyCode.RightArrow)) snapshot.x = 1;
         				}
         			}
         		}
         		else
         		{
+        			snapshot = new Vector2(Mathf.Clamp((int)launchDirection, -1, 1), 0);
         			if(!(Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.DownArrow)))
         			{
         				if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
         				{
         					applyRise = true;
         					orientation = Orientation.HORIZ;
+        					if(Input.GetKey(KeyCode.UpArrow)) snapshot.y = 1;
+        					if(Input.GetKey(KeyCode.DownArrow)) snapshot.y = -1;
         				}
         			}
         		}
@@ -125,9 +133,9 @@ public class TestJump2 : MonoBehaviour
     			riseProgress += 0.1f;
     		}
     		if(orientation == Orientation.HORIZ)
-    			rb.velocity = new Vector2(rise, Mathf.Clamp((int)launchDirection, -1, 1) * airSpeed);
+    			rb.velocity = new Vector2(rise, snapshot.y * airSpeed);
     		else
-    			rb.velocity = new Vector2(Mathf.Clamp((int)launchDirection, -1, 1) * airSpeed, rise);
+    			rb.velocity = new Vector2(snapshot.x * airSpeed, rise);
     		if(slowdownActive && slowdownTimer > 0)
     		{
     			Debug.Log("not implemented yet");
