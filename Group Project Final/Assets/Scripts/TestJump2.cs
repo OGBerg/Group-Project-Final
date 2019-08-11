@@ -12,14 +12,15 @@ public class TestJump2 : MonoBehaviour
 
 	public float groundSpeed;
 	public float airSpeed;
-	public float launchHeight;
+	public float riseSpeed;
+	//public float launchHeight;
 
 	public AnimationCurve slowdownCurve;
 	public AnimationCurve speedupCurve;
 	public float slowdownPercentage; //percentage of air speed to slow to
 	public float speedupPercentage;
 	public float slowdownTime; //how long are you allowed to slow down?
-	public float riseSpeed;
+	//public float riseSpeed;
 
 	bool slowdownActive = false;
 	float slowdownProgress = 1f; //actual percentage of slowdown deceleration completed; 1=full speed, 0=full slow
@@ -73,16 +74,18 @@ public class TestJump2 : MonoBehaviour
         			//hacky, but I'm not gonna wade into vector addition bugs yet
         			if(!(Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow)))
         			{
-	        			if(Input.GetKey(KeyCode.LeftArrow)) movement = Vector2.left;
-	        			if(Input.GetKey(KeyCode.RightArrow)) movement = Vector2.right;
+        				movement = Vector2.zero;
+	        			if(Input.GetKey(KeyCode.LeftArrow)) movement = Vector2.left * groundSpeed;
+	        			if(Input.GetKey(KeyCode.RightArrow)) movement = Vector2.right * groundSpeed;
 	        		}
         		}
         		else
         		{
         			if(!(Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.DownArrow)))
         			{
-	        			if(Input.GetKey(KeyCode.UpArrow)) movement = Vector2.up;
-	        			if(Input.GetKey(KeyCode.DownArrow)) movement = Vector2.down;
+        				movement = Vector2.zero;
+	        			if(Input.GetKey(KeyCode.UpArrow)) movement = Vector2.up * groundSpeed;
+	        			if(Input.GetKey(KeyCode.DownArrow)) movement = Vector2.down * groundSpeed;
 	        		}
         		}
         	}
