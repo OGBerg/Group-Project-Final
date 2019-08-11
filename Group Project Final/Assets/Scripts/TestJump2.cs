@@ -6,7 +6,9 @@ public class TestJump2 : MonoBehaviour
 {
 	Vector2 movement;
 	enum Orientation {VERT, HORIZ};
+	enum LaunchDirection {UP, DOWN, LEFT, RIGHT};
 	Orientation orientation = Orientation.HORIZ;
+	LaunchDirection LaunchDirection = LaunchDirection.UP;
 
 	public float groundSpeed;
 	public float airSpeed;
@@ -32,7 +34,8 @@ public class TestJump2 : MonoBehaviour
     {
         if(onSurface)
         {
-
+        	//if VERT, LaunchDirection can only be LEFT or RIGHT
+        	//if HORIZ, LaunchDirection can only be UP or DOWN
         }
         else
         {
