@@ -46,11 +46,6 @@ public class TestJump2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    	if(Input.GetKeyDown(KeyCode.Z))
-    	{
-    		Debug.Log(slowdownActive);
-    		Debug.Log(slowdownTimer);
-    	}
         if(onSurface)
         {
         	//if VERT, LaunchDirection can only be LEFT or RIGHT
@@ -126,7 +121,6 @@ public class TestJump2 : MonoBehaviour
     	else
     	{
     		float rise = 0;
-    		slowdownTimer = slowdownTime;
     		if(riseProgress < 1f && applyRise)
     		{
     			rise = riseSpeed * Mathf.Clamp((int)launchDirection, -1, 1);
@@ -138,8 +132,9 @@ public class TestJump2 : MonoBehaviour
     			rb.velocity = new Vector2(snapshot.x * airSpeed, rise);
     		if(slowdownActive && slowdownTimer > 0)
     		{
-    			Debug.Log("not implemented yet");
-    			//TODO
+    			Vector2 slowVelocity = rb.velocity * slowdownPercentage / 100;
+    			//temp non-animation fix
+    			rb.velocity = slowVelocity;
     			slowdownTimer -= 0.1f;
     		}
     	}
