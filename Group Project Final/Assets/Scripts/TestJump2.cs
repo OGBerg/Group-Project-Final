@@ -141,6 +141,7 @@ public class TestJump2 : MonoBehaviour
     			//rb.velocity = slowVelocity;
     			if(slowdownDelta > 0)
     			{
+    				//slowdownDelta -= 0.1f;
     				slowdownProgress += 1/slowdownDelta;
     				rb.velocity = Vector2.Lerp(rb.velocity, slowVelocity,
     					slowdownCurve.Evaluate(slowdownProgress));
@@ -154,10 +155,11 @@ public class TestJump2 : MonoBehaviour
     			Vector2 slowVelocity = rb.velocity * slowdownPercentage / 100;
     			if(slowdownDelta < slowdownTime * slowdownEnvelope)
     			{
+    				slowdownDelta += 0.1f;
     				slowdownProgress -= 1/slowdownDelta;
     				rb.velocity = Vector2.Lerp(slowVelocity, rb.velocity,
     					speedupCurve.Evaluate(slowdownProgress));
-    				slowdownDelta += 0.1f;
+    				//slowdownDelta += 0.1f;
     			}
     		}
     	}
