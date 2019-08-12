@@ -135,32 +135,9 @@ public class TestJump2 : MonoBehaviour
     			rb.velocity = new Vector2(snapshot.x * airSpeed, rise);
     		if(slowdownActive && slowdownTimer > 0)
     		{
-    			Debug.Log("slowdown");
     			Vector2 slowVelocity = rb.velocity * slowdownPercentage / 100;
     			//temp non-animation fix
-    			//rb.velocity = slowVelocity;
-    			if(slowdownDelta > 0)
-    			{
-    				//slowdownDelta -= 0.1f;
-    				slowdownProgress += 1/slowdownDelta;
-    				rb.velocity = Vector2.Lerp(rb.velocity, slowVelocity,
-    					slowdownCurve.Evaluate(slowdownProgress));
-    				slowdownDelta -= 0.1f;
-    			}
-    			slowdownTimer -= 0.1f;
-    		}
-    		if(!slowdownActive && slowdownProgress > 0)
-    		{
-    			Debug.Log("speedup");
-    			Vector2 slowVelocity = rb.velocity * slowdownPercentage / 100;
-    			if(slowdownDelta < slowdownTime * slowdownEnvelope)
-    			{
-    				slowdownDelta += 0.1f;
-    				slowdownProgress -= 1/slowdownDelta;
-    				rb.velocity = Vector2.Lerp(slowVelocity, rb.velocity,
-    					speedupCurve.Evaluate(slowdownProgress));
-    				//slowdownDelta += 0.1f;
-    			}
+    			rb.velocity = slowVelocity;
     		}
     	}
     }
