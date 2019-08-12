@@ -21,13 +21,15 @@ public class TestJump2 : MonoBehaviour
 	public float slowdownPercentage; //percentage of air speed to slow to
 	public float speedupPercentage;
 	public float slowdownTime; //how long are you allowed to slow down?
+	public float slowdownEnvelope; //How much of the slowdown to spend on the easing curves?
 	//public float riseSpeed;
 
 	bool slowdownActive = false;
-	float slowdownProgress = 1f; //actual percentage of slowdown deceleration completed; 1=full speed, 0=full slow
+	float slowdownProgress = 0; //actual percentage of slowdown deceleration completed; 0=full speed, 1=full slow
 	bool applyRise = false;
 	float riseProgress = 1f; //only for running starts, not straight launches
 	float slowdownTimer;
+	float slowdownDelta;
 
 	Rigidbody2D rb;
 	bool onSurface;
@@ -38,6 +40,7 @@ public class TestJump2 : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         movement = Vector2.zero;
         slowdownTimer = slowdownTime;
+        slowdownDelta = slowdownTime * slowdownEnvelope;
         orientation = Orientation.HORIZ;
         launchDirection = LaunchDirection.UP;
         snapshot = new Vector2(0,0);
@@ -132,10 +135,30 @@ public class TestJump2 : MonoBehaviour
     			rb.velocity = new Vector2(snapshot.x * airSpeed, rise);
     		if(slowdownActive && slowdownTimer > 0)
     		{
+    			Debug.Log("slowdown");
     			Vector2 slowVelocity = rb.velocity * slowdownPercentage / 100;
     			//temp non-animation fix
-    			rb.velocity = slowVelocity;
+    			//rb.velocity = slowVelocity;
+    			if(slowdownDelta > 0)
+    			{
+    				slowdownProgress += 1/slowdownDelta;
+    				rb.velocity = Vector2.Lerp(rb.velocity, slowVelocity,
+    					slowdownCurve.Evaluate(slowdownProgress));
+    				slowdownDelta -= 0.1f;
+    			}
     			slowdownTimer -= 0.1f;
+    		}
+    		if(!slowdownActive && slowdownProgress > 0)
+    		{
+    			Debug.Log("speedup");
+    			Vector2 slowVelocity = rb.velocity * slowdownPercentage / 100;
+    			if(slowdownDelta < slowdownTime * slowdownEnvelope)
+    			{
+    				slowdownProgress -= 1/slowdownDelta;
+    				rb.velocity = Vector2.Lerp(slowVelocity, rb.velocity,
+    					speedupCurve.Evaluate(slowdownProgress));
+    				slowdownDelta += 0.1f;
+    			}
     		}
     	}
     }
@@ -147,6 +170,8 @@ public class TestJump2 : MonoBehaviour
     		onSurface = true;
     		riseProgress = 1f;
     		slowdownTimer = slowdownTime;
+    		slowdownDelta = slowdownTime * slowdownEnvelope;
+    		slowdownProgress = 0;
     		if((int)c.contacts[0].normal.x == 0)
     		{
     			orientation = Orientation.HORIZ;
