@@ -39,6 +39,8 @@ public class BasicJump : MonoBehaviour
 
     public GameObject background;
     public float backgroundOffset;
+    public AudioClip jump;
+    public AudioClip impact;
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +76,7 @@ public class BasicJump : MonoBehaviour
         	applyRise = false;
         	if(Input.GetKey(KeyCode.Space))
         	{
+                audio.clip = jump;
                 audio.Play();
         		riseProgress = 0;
         		//these conditions basically invent a hypothetical launch platform of orthogonal orientation; yes, it's hacky
@@ -183,11 +186,19 @@ public class BasicJump : MonoBehaviour
     	}
     }
 
+    void OnCollisionEnter2D(Collision2D c)
+    {
+        if(c.gameObject.tag == "ground")
+        {
+            audio.clip = impact;
+            audio.Play();
+        }
+    }
+
     void OnCollisionStay2D(Collision2D c)
     {
     	if(c.gameObject.tag == "ground")
     	{
-
             //delay = true;
     		riseProgress = 1f;
     		slowdownTimer = slowdownTime;
