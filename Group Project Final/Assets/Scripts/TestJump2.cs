@@ -19,7 +19,7 @@ public class TestJump2 : MonoBehaviour
 	public AnimationCurve slowdownCurve;
 	public AnimationCurve speedupCurve;
 	public float slowdownPercentage; //percentage of air speed to slow to
-	public float speedupPercentage;
+	//public float speedupPercentage;
 	public float slowdownTime; //how long are you allowed to slow down?
 	public float slowdownEnvelope; //How much of the slowdown to spend on the easing curves?
 	//public float riseSpeed;
@@ -32,6 +32,7 @@ public class TestJump2 : MonoBehaviour
 	float slowdownDelta;
 
 	Rigidbody2D rb;
+    AudioSource audio;
 	bool onSurface;
     bool delay = false;
 
@@ -39,6 +40,7 @@ public class TestJump2 : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audio = GetComponent<AudioSource>();
         movement = Vector2.zero;
         slowdownTimer = slowdownTime;
         slowdownDelta = slowdownTime * slowdownEnvelope;
@@ -57,6 +59,7 @@ public class TestJump2 : MonoBehaviour
         	applyRise = false;
         	if(Input.GetKey(KeyCode.Space))
         	{
+                audio.Play();
         		riseProgress = 0;
         		//these conditions basically invent a hypothetical launch platform of orthogonal orientation; yes, it's hacky
         		if(orientation == Orientation.HORIZ)
@@ -139,6 +142,8 @@ public class TestJump2 : MonoBehaviour
     			rb.velocity = new Vector2(snapshot.x * airSpeed, rise);
     		if(slowdownActive && slowdownTimer > 0)
     		{
+                //TODO BREAKING BUG
+                //exhausted slowdown timer breaks movement
     			Vector2 slowVelocity = rb.velocity * slowdownPercentage / 100;
     			//temp non-animation fix
     			rb.velocity = slowVelocity;
