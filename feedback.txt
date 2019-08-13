@@ -1,0 +1,15 @@
+If you have to commit to the jump like this, you want the jump to be much faster.
+
+Maybe a level where jump is just held permanantly
+
+Path is very straight, maybe arcs of some kind? (Proximity to environment could influence gravity?)
+
+Definitley get some level and enemy actions.
+
+Limited moves per level?
+
+Explain what it is the buttons do.
+
+Hard-to reach onstacles
+
+Puzzle-box instead of linear level?
