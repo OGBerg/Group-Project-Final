@@ -20,14 +20,15 @@ public class EnemyWalking : MonoBehaviour
         resetTime -= Time.deltaTime;
         if (resetTime <= 0)
         {
-            mySprite.flipX = !mySprite.flipX; 
-            resetTime = 3f;
-            
+            //mySprite.flipX = !mySprite.flipX; 
+            //resetTime = 3f;
 
+            Vector3 flip = transform.localScale;
+            flip.x *= -1;
+            transform.localScale = flip;
+
+            resetTime = 3f;
         }
-        //else
-        //{
-        //    mySprite.flipX = false;
-        //}
+       
     }
 }
