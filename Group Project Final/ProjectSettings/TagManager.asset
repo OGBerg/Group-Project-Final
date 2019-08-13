@@ -6,6 +6,8 @@ TagManager:
   tags:
   - ground
   - wall
+  - powerup
+  - pickup
   layers:
   - Default
   - TransparentFX
