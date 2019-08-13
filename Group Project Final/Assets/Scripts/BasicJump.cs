@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestJump2 : MonoBehaviour
+public class BasicJump : MonoBehaviour
 {
 	Vector2 movement;
 	Vector2 snapshot;
