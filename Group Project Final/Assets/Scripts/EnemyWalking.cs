@@ -20,7 +20,7 @@ public class EnemyWalking : MonoBehaviour
         resetTime -= Time.deltaTime;
         if (resetTime <= 0)
         {
-            mySprite.flipX = false; 
+            mySprite.flipX = !mySprite.flipX; 
             resetTime = 3f;
             
 
