@@ -42,6 +42,8 @@ public class BasicJump : MonoBehaviour
     public AudioClip jump;
     public AudioClip impact;
 
+    public GameObject powerupSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -188,10 +190,19 @@ public class BasicJump : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D c)
     {
+        // Debug.Log(c.gameObject.tag);
         if(c.gameObject.tag == "ground")
         {
             audio.clip = impact;
             audio.Play();
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D c)
+    {
+        if(c.gameObject.tag == "pickup")
+        {
+            powerupSound.GetComponent<AudioSource>().Play();
         }
     }
 
