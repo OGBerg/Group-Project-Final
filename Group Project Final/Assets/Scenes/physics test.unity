@@ -465,7 +465,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   slowdownPercentage: 30
   speedupPercentage: 0
-  slowdownTime: 1
+  slowdownTime: 5
   slowdownEnvelope: 0.1
 --- !u!1 &358116387
 GameObject:

@@ -33,6 +33,7 @@ public class TestJump2 : MonoBehaviour
 
 	Rigidbody2D rb;
 	bool onSurface;
+    bool delay = false;
 
     // Start is called before the first frame update
     void Start()
@@ -113,8 +114,11 @@ public class TestJump2 : MonoBehaviour
         }
         else //in air
         {
-        	if(Input.GetKeyDown(KeyCode.Space)) slowdownActive = true;
-        	if(Input.GetKeyUp(KeyCode.Space)) slowdownActive = false;
+            if(!delay)
+            {
+            	if(Input.GetKeyDown(KeyCode.Space)) slowdownActive = true;
+            	if(Input.GetKeyUp(KeyCode.Space)) slowdownActive = false;
+            }
         }
     }
 
@@ -138,6 +142,7 @@ public class TestJump2 : MonoBehaviour
     			Vector2 slowVelocity = rb.velocity * slowdownPercentage / 100;
     			//temp non-animation fix
     			rb.velocity = slowVelocity;
+                slowdownTimer -= 0.1f;
     		}
     	}
     }
@@ -146,7 +151,7 @@ public class TestJump2 : MonoBehaviour
     {
     	if(c.gameObject.tag == "ground")
     	{
-    		onSurface = true;
+            delay = true;
     		riseProgress = 1f;
     		slowdownTimer = slowdownTime;
     		slowdownDelta = slowdownTime * slowdownEnvelope;
@@ -164,6 +169,8 @@ public class TestJump2 : MonoBehaviour
     			else launchDirection = LaunchDirection.RIGHT;
     		}
     		else Debug.Log("oops");
+            onSurface = true;
+            delay = false;
     		//TODO: diagonal platforms?
     		// would need to change launchDirection from an enum to a float, maybe as a stretch goal
     	}
