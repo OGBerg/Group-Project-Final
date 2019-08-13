@@ -33,6 +33,7 @@ public class TestJump2 : MonoBehaviour
 
 	Rigidbody2D rb;
     AudioSource audio;
+    SpriteRenderer sr;
 	bool onSurface;
     bool delay = false;
 
@@ -41,6 +42,7 @@ public class TestJump2 : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         audio = GetComponent<AudioSource>();
+        sr = GetComponent<SpriteRenderer>();
         movement = Vector2.zero;
         slowdownTimer = slowdownTime;
         slowdownDelta = slowdownTime * slowdownEnvelope;
@@ -52,12 +54,6 @@ public class TestJump2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.Z))
-        {
-            Debug.Log(orientation);
-            Debug.Log(launchDirection);
-            Debug.Log("on ground: " + onSurface);
-        }
         if(onSurface)
         {
         	//if VERT, LaunchDirection can only be LEFT or RIGHT

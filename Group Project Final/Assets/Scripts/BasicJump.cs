@@ -33,6 +33,7 @@ public class BasicJump : MonoBehaviour
 
 	Rigidbody2D rb;
     AudioSource audio;
+    SpriteRenderer sr;
 	bool onSurface;
     bool delay = false;
 
@@ -41,12 +42,14 @@ public class BasicJump : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         audio = GetComponent<AudioSource>();
+        sr = GetComponent<SpriteRenderer>();
         movement = Vector2.zero;
         slowdownTimer = slowdownTime;
         slowdownDelta = slowdownTime * slowdownEnvelope;
         orientation = Orientation.HORIZ;
         launchDirection = LaunchDirection.UP;
         snapshot = new Vector2(0,0);
+        onSurface = true;
     }
 
     // Update is called once per frame
@@ -106,8 +109,16 @@ public class BasicJump : MonoBehaviour
         			if(!(Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow)))
         			{
         				movement = Vector2.zero;
-	        			if(Input.GetKey(KeyCode.LeftArrow)) movement = Vector2.left * groundSpeed;
-	        			if(Input.GetKey(KeyCode.RightArrow)) movement = Vector2.right * groundSpeed;
+	        			if(Input.GetKey(KeyCode.LeftArrow))
+                        {
+                            movement = Vector2.left * groundSpeed;
+                            sr.flipX = true;
+                        }
+	        			if(Input.GetKey(KeyCode.RightArrow))
+                        {
+                            movement = Vector2.right * groundSpeed;
+                            sr.flipX = false;
+                        }
 	        		}
         		}
         		else
@@ -115,8 +126,16 @@ public class BasicJump : MonoBehaviour
         			if(!(Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.DownArrow)))
         			{
         				movement = Vector2.zero;
-	        			if(Input.GetKey(KeyCode.UpArrow)) movement = Vector2.up * groundSpeed;
-	        			if(Input.GetKey(KeyCode.DownArrow)) movement = Vector2.down * groundSpeed;
+	        			if(Input.GetKey(KeyCode.UpArrow))
+                        {
+                            movement = Vector2.up * groundSpeed;
+                            sr.flipY = false;
+                        }
+	        			if(Input.GetKey(KeyCode.DownArrow))
+                        {
+                            movement = Vector2.down * groundSpeed;
+                            sr.flipY = true;
+                        }
 	        		}
         		}
         	}
@@ -171,14 +190,30 @@ public class BasicJump : MonoBehaviour
     		if(Mathf.RoundToInt(c.contacts[c.contacts.Length-1].normal.x) == 0)
     		{
     			orientation = Orientation.HORIZ;
-    			if(c.contacts[c.contacts.Length-1].normal.y > 0) launchDirection = LaunchDirection.UP;
-    			else launchDirection = LaunchDirection.DOWN;
+    			if(c.contacts[c.contacts.Length-1].normal.y > 0)
+                {
+                    sr.flipY = false;
+                    launchDirection = LaunchDirection.UP;
+                }
+    			else
+                {
+                    sr.flipY = true;
+                    launchDirection = LaunchDirection.DOWN;
+                }
     		}
     		else if(Mathf.RoundToInt(c.contacts[c.contacts.Length-1].normal.y) == 0)
     		{
     			orientation = Orientation.VERT;
-    			if(c.contacts[c.contacts.Length-1].normal.x < 0) launchDirection = LaunchDirection.LEFT;
-    			else launchDirection = LaunchDirection.RIGHT;
+    			if(c.contacts[c.contacts.Length-1].normal.x < 0)
+                {
+                    sr.flipX = true;
+                    launchDirection = LaunchDirection.LEFT;
+                }
+    			else
+                {
+                    sr.flipX = false;
+                    launchDirection = LaunchDirection.RIGHT;
+                }
     		}
     		else Debug.Log("oops");
             onSurface = true;
