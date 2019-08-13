@@ -52,6 +52,11 @@ public class TestJump2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKey(KeyCode.Z))
+        {
+            Debug.Log(orientation);
+            Debug.Log(launchDirection);
+        }
         if(onSurface)
         {
         	//if VERT, LaunchDirection can only be LEFT or RIGHT
