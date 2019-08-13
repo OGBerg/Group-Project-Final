@@ -56,6 +56,7 @@ public class TestJump2 : MonoBehaviour
         {
             Debug.Log(orientation);
             Debug.Log(launchDirection);
+            Debug.Log("on ground: " + onSurface);
         }
         if(onSurface)
         {
@@ -157,30 +158,32 @@ public class TestJump2 : MonoBehaviour
     	}
     }
 
-    void OnCollisionEnter2D(Collision2D c)
+    void OnCollisionStay2D(Collision2D c)
     {
     	if(c.gameObject.tag == "ground")
     	{
-            delay = true;
+
+            //delay = true;
     		riseProgress = 1f;
     		slowdownTimer = slowdownTime;
     		slowdownDelta = slowdownTime * slowdownEnvelope;
     		slowdownProgress = 0;
-    		if((int)c.contacts[0].normal.x == 0)
+    		if(Mathf.RoundToInt(c.contacts[c.contacts.Length-1].normal.x) == 0)
     		{
     			orientation = Orientation.HORIZ;
-    			if(c.contacts[0].normal.y > 0) launchDirection = LaunchDirection.UP;
+    			if(c.contacts[c.contacts.Length-1].normal.y > 0) launchDirection = LaunchDirection.UP;
     			else launchDirection = LaunchDirection.DOWN;
     		}
-    		else if((int)c.contacts[0].normal.y == 0)
+    		else if(Mathf.RoundToInt(c.contacts[c.contacts.Length-1].normal.y) == 0)
     		{
     			orientation = Orientation.VERT;
-    			if(c.contacts[0].normal.x < 0) launchDirection = LaunchDirection.LEFT;
+    			if(c.contacts[c.contacts.Length-1].normal.x < 0) launchDirection = LaunchDirection.LEFT;
     			else launchDirection = LaunchDirection.RIGHT;
     		}
     		else Debug.Log("oops");
             onSurface = true;
-            delay = false;
+            //Debug.Log("landing: " + onSurface);
+            //delay = false;
     		//TODO: diagonal platforms?
     		// would need to change launchDirection from an enum to a float, maybe as a stretch goal
     	}
@@ -189,5 +192,6 @@ public class TestJump2 : MonoBehaviour
     void OnCollisionExit2D(Collision2D c)
     {
     	onSurface = false;
+        // Debug.Log("exiting: " + onSurface);
     }
 }
