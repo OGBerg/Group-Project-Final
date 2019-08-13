@@ -37,6 +37,9 @@ public class BasicJump : MonoBehaviour
 	bool onSurface;
     bool delay = false;
 
+    public GameObject background;
+    public float backgroundOffset;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,6 +64,9 @@ public class BasicJump : MonoBehaviour
             Debug.Log(launchDirection);
             Debug.Log("on ground: " + onSurface);
         }
+        background.transform.position = new Vector2(
+            background.transform.position.x - (rb.velocity.x * backgroundOffset),
+            background.transform.position.y - (rb.velocity.y * backgroundOffset));
         if(onSurface)
         {
         	//if VERT, LaunchDirection can only be LEFT or RIGHT
