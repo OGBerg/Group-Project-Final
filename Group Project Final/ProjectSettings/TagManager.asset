@@ -8,6 +8,7 @@ TagManager:
   - wall
   - powerup
   - pickup
+  - SpecialWall
   layers:
   - Default
   - TransparentFX
