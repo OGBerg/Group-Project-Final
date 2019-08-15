@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SwitchMusic : MonoBehaviour
 {
@@ -16,5 +17,10 @@ public class SwitchMusic : MonoBehaviour
     	audio.clip = sound;
     	audio.time = tmp;
     	audio.Play();
+    }
+
+    void Update()
+    {
+    	if(Input.GetKey(KeyCode.Space)) SceneManager.LoadScene(0);
     }
 }
