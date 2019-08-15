@@ -127,6 +127,7 @@ public class BasicJump : MonoBehaviour
         			if(!(Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow)))
         			{
         				movement = Vector2.zero;
+                        // bool tmp = sr.flipX;
 	        			if(Input.GetKey(KeyCode.LeftArrow))
                         {
                             movement = Vector2.left * groundSpeed;
@@ -137,6 +138,10 @@ public class BasicJump : MonoBehaviour
                             movement = Vector2.right * groundSpeed;
                             sr.flipX = false;
                         }
+                        // if(tmp != sr.flipX)
+                        // {
+                        //     transform.localEulerAngles = new Vector3(0,0,transform.localEulerAngles.z + 180);
+                        // }
 	        		}
         		}
         		else
@@ -144,6 +149,7 @@ public class BasicJump : MonoBehaviour
         			if(!(Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.DownArrow)))
         			{
         				movement = Vector2.zero;
+                        // bool tmp = sr.flipY;
 	        			if(Input.GetKey(KeyCode.UpArrow))
                         {
                             movement = Vector2.up * groundSpeed;
@@ -154,6 +160,10 @@ public class BasicJump : MonoBehaviour
                             movement = Vector2.down * groundSpeed;
                             sr.flipY = true;
                         }
+                        // if(tmp != sr.flipY)
+                        // {
+                        //     transform.localEulerAngles = new Vector3(0,0,transform.localEulerAngles.z + 180);
+                        // }
 	        		}
         		}
         	}
@@ -238,11 +248,13 @@ public class BasicJump : MonoBehaviour
     			if(c.contacts[c.contacts.Length-1].normal.y > 0)
                 {
                     //sr.flipY = false;
+                    transform.localEulerAngles = new Vector3(0,0,0);
                     launchDirection = LaunchDirection.UP;
                 }
     			else
                 {
                     //sr.flipY = true;
+                    transform.localEulerAngles = new Vector3(0,0,180);
                     launchDirection = LaunchDirection.DOWN;
                 }
     		}
@@ -252,11 +264,13 @@ public class BasicJump : MonoBehaviour
     			if(c.contacts[c.contacts.Length-1].normal.x < 0)
                 {
                     //sr.flipX = true;
+                    transform.localEulerAngles = new Vector3(0,0,90);
                     launchDirection = LaunchDirection.LEFT;
                 }
     			else
                 {
                     //sr.flipX = false;
+                    transform.localEulerAngles = new Vector3(0,0,270);
                     launchDirection = LaunchDirection.RIGHT;
                 }
     		}
