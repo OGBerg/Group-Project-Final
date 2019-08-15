@@ -237,12 +237,12 @@ public class BasicJump : MonoBehaviour
     			orientation = Orientation.HORIZ;
     			if(c.contacts[c.contacts.Length-1].normal.y > 0)
                 {
-                    sr.flipY = false;
+                    //sr.flipY = false;
                     launchDirection = LaunchDirection.UP;
                 }
     			else
                 {
-                    sr.flipY = true;
+                    //sr.flipY = true;
                     launchDirection = LaunchDirection.DOWN;
                 }
     		}
@@ -251,12 +251,12 @@ public class BasicJump : MonoBehaviour
     			orientation = Orientation.VERT;
     			if(c.contacts[c.contacts.Length-1].normal.x < 0)
                 {
-                    sr.flipX = true;
+                    //sr.flipX = true;
                     launchDirection = LaunchDirection.LEFT;
                 }
     			else
                 {
-                    sr.flipX = false;
+                    //sr.flipX = false;
                     launchDirection = LaunchDirection.RIGHT;
                 }
     		}
