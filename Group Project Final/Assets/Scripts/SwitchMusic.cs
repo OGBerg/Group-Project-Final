@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class SwitchMusic : MonoBehaviour
 {
 	public AudioClip sound;
+	public AudioClip reset;
 	GameObject music;
 	AudioSource audio;
 
@@ -21,6 +22,10 @@ public class SwitchMusic : MonoBehaviour
 
     void Update()
     {
-    	if(Input.GetKey(KeyCode.Space)) SceneManager.LoadScene(0);
+    	if(Input.GetKey(KeyCode.Space))
+    	{
+    		audio.clip = reset;
+    		SceneManager.LoadScene(0);
+    	}
     }
 }
