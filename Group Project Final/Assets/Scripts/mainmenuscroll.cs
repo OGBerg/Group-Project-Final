@@ -5,6 +5,8 @@ using UnityEngine;
 public class mainmenuscroll : MonoBehaviour
 {
 
+    public float scrollSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +17,7 @@ public class mainmenuscroll : MonoBehaviour
     void Update()
     {
         var pos = transform.position;
-        pos.x += .03f;
+        pos.x += scrollSpeed;
         transform.position = pos;
     }
 
