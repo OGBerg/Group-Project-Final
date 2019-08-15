@@ -6,7 +6,7 @@ public class EnemyWalking : MonoBehaviour
 {
     SpriteRenderer mySprite;
 
-    public float resetTime = 3f; 
+    public float resetTime = 1.5f; 
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +27,7 @@ public class EnemyWalking : MonoBehaviour
             flip.x *= -1;
             transform.localScale = flip;
 
-            resetTime = 3f;
+            resetTime = 1.5f;
         }
        
     }
