@@ -889,7 +889,6 @@ MonoBehaviour:
   impact: {fileID: 8300000, guid: 5acad7d583f1042a69278fa1203cf200, type: 3}
   powerupSound: {fileID: 2139537367}
   camera: {fileID: 1193343027}
-  music: {fileID: 1050848228}
 --- !u!95 &217440742
 Animator:
   serializedVersion: 3
@@ -1183,8 +1182,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 883961984}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 0.2, z: 1}
-  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_LocalPosition: {x: 0.6, y: 0.5, z: 1}
+  m_LocalScale: {x: 1.28029, y: 1.28029, z: 1.28029}
   m_Children: []
   m_Father: {fileID: 176447225}
   m_RootOrder: 8
@@ -1740,7 +1739,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.8699684
+  orthographic size: 7.674965
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
