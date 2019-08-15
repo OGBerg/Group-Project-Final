@@ -50,6 +50,7 @@ public class BasicJump : MonoBehaviour
     AnalogGlitch glitch;
     AudioDistortionFilter distort;
     int powerUps = 0;
+    int score = 0;
 
     void Awake()
     {
@@ -78,6 +79,10 @@ public class BasicJump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (score >= 3)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
         if(Input.GetKey(KeyCode.Z))
         {
             Debug.Log(orientation);
@@ -197,6 +202,8 @@ public class BasicJump : MonoBehaviour
         }
     }
 
+    
+
     void FixedUpdate()
     {
     	if(onSurface) rb.velocity = movement; //look, Ma, no impulses!
@@ -239,6 +246,7 @@ public class BasicJump : MonoBehaviour
         if(c.gameObject.tag == "pickup")
         {
             powerupSound.GetComponent<AudioSource>().Play();
+            score += 1;
         }
     }
 
