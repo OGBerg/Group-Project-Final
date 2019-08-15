@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Kino;
+using UnityEngine.SceneManagement;
 
 public class BasicJump : MonoBehaviour
 {
@@ -48,6 +49,14 @@ public class BasicJump : MonoBehaviour
     public GameObject music;
     AnalogGlitch glitch;
     AudioDistortionFilter distort;
+    int powerUps = 0;
+
+    void Awake()
+    {
+        GameObject[] o = GameObject.FindGameObjectsWithTag("music");
+        if(o.Length > 1) Destroy(o[1]);
+        DontDestroyOnLoad(o[0]);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -281,6 +290,14 @@ public class BasicJump : MonoBehaviour
     		//TODO: diagonal platforms?
     		// would need to change launchDirection from an enum to a float, maybe as a stretch goal
     	}
+        if(c.gameObject.tag == "pickup")
+        {
+            powerUps++;
+            if(powerUps == 3) //I know, I know
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
+        }
     }
 
     void OnCollisionExit2D(Collision2D c)

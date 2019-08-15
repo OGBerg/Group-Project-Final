@@ -9,6 +9,7 @@ TagManager:
   - powerup
   - pickup
   - SpecialWall
+  - music
   layers:
   - Default
   - TransparentFX
