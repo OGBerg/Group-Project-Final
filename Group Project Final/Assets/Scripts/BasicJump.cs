@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Kino;
 
 public class BasicJump : MonoBehaviour
 {
@@ -43,6 +44,10 @@ public class BasicJump : MonoBehaviour
     public AudioClip impact;
 
     public GameObject powerupSound;
+    public GameObject camera;
+    public GameObject music;
+    AnalogGlitch glitch;
+    AudioDistortionFilter distort;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +55,8 @@ public class BasicJump : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         audio = GetComponent<AudioSource>();
         sr = GetComponent<SpriteRenderer>();
+        glitch = camera.GetComponent<AnalogGlitch>();
+        distort = music.GetComponent<AudioDistortionFilter>();
         movement = Vector2.zero;
         slowdownTimer = slowdownTime;
         slowdownDelta = slowdownTime * slowdownEnvelope;
@@ -70,7 +77,7 @@ public class BasicJump : MonoBehaviour
         }
         background.transform.position = new Vector2(
             background.transform.position.x - (rb.velocity.x * backgroundOffset),
-            background.transform.position.y - (rb.velocity.y * backgroundOffset));
+            background.transform.position.y - (rb.velocity.y * backgroundOffset/10));
         if(onSurface)
         {
         	//if VERT, LaunchDirection can only be LEFT or RIGHT
@@ -155,8 +162,18 @@ public class BasicJump : MonoBehaviour
         {
             if(!delay)
             {
-            	if(Input.GetKeyDown(KeyCode.Space)) slowdownActive = true;
-            	if(Input.GetKeyUp(KeyCode.Space)) slowdownActive = false;
+            	if(Input.GetKeyDown(KeyCode.Space))
+                {
+                    distort.enabled = true;
+                    glitch.enabled = true;
+                    slowdownActive = true;
+                }
+            	if(Input.GetKeyUp(KeyCode.Space))
+                {
+                    distort.enabled = false;
+                    glitch.enabled = false;
+                    slowdownActive = false;
+                }
             }
         }
     }
